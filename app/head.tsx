@@ -1,7 +1,7 @@
 export default function Head() {
   const title = "Federico Martinez | Dashboards, Automatización y Análisis de Datos";
   const description =
-    "Ayudo a empresas, emprendedores y profesionales a tomar mejores decisiones con dashboards, automatización de procesos y análisis financiero. Analista de Datos en Argentina.";
+    "Analista de Datos en Argentina. Dashboards, automatización de procesos y análisis financiero para empresas y emprendedores. Abierto a proyectos freelance y nuevas oportunidades laborales.";
 
   const url = "https://fede-martinez-portfolio.vercel.app/";
   const image = "https://fede-martinez-portfolio.vercel.app/preview.png";

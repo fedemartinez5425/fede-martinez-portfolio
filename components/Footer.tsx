@@ -21,7 +21,7 @@ const Footer = () => {
             Datos, dashboards y automatización · San Juan, Argentina
           </p>
           <p className="text-neutral-500 dark:text-neutral-400 text-sm mt-1">
-            Disponible para proyectos freelance y consultoría
+            Disponible para proyectos freelance y nuevas oportunidades laborales
           </p>
         </div>
 

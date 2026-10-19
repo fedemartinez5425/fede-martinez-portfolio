@@ -4,11 +4,11 @@ import Image from "next/image"
 import { Link } from "react-scroll/modules"
 import { HiArrowDown } from "react-icons/hi"
 import { FaWhatsapp } from "react-icons/fa"
-import { whatsappLink } from "./contact"
+import { CV_URL, LINKEDIN_URL, whatsappLink } from "./contact"
 
 const HIGHLIGHTS = [
   "People Analytics en Hanesbrands / Gildan",
-  "Cofundador de Optima Consulting",
+  "Python, SQL, Power BI y Tableau",
   "+12 proyectos de datos y finanzas",
 ]
 
@@ -64,6 +64,28 @@ const HeroSection = () => {
               Ver servicios
             </Link>
           </div>
+
+          <p className="mt-5 text-sm text-neutral-600 dark:text-neutral-400">
+            ¿Buscás sumar un analista de datos a tu equipo?{" "}
+            <a
+              href={CV_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-teal-700 dark:text-teal-300 underline underline-offset-2 hover:text-teal-900 dark:hover:text-teal-100"
+            >
+              Mirá mi CV
+            </a>{" "}
+            o{" "}
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-teal-700 dark:text-teal-300 underline underline-offset-2 hover:text-teal-900 dark:hover:text-teal-100"
+            >
+              escribime por LinkedIn
+            </a>
+            .
+          </p>
 
           <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-2 justify-center md:justify-start text-sm text-neutral-600 dark:text-neutral-400">
             {HIGHLIGHTS.map((h) => (
