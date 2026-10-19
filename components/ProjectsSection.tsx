@@ -1,208 +1,228 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import SlideUp from "./SlideUp";
-import { BsGithub, BsArrowUpRightSquare } from "react-icons/bs";
+import { BsGithub, BsArrowUpRight } from "react-icons/bs";
 
-const projects = [
-    {
-    name: "🏆 Predicción Final Mundial 2026 — ML con Elo + Monte Carlo",
+type Project = {
+  name: string;
+  description: string;
+  image: string;
+  tags: string[];
+  github?: string;
+  link?: string;
+};
+
+const projects: Project[] = [
+  {
+    name: "🏆 Predicción Final Mundial 2026",
     description:
-      "Modelo de Machine Learning para estimar probabilidades en partidos de selecciones nacionales, aplicado a la Final Argentina vs España del Mundial 2026. Incluye Elo Rating dinámico, doble ventana de forma reciente, rendimiento contra rivales Top-20, calibración de probabilidades (Isotonic Regression), interpretabilidad con SHAP y simulación Monte Carlo de 200.000 iteraciones para estimar al campeón incluyendo tiempo extra y penales.",
+      "Modelo de Machine Learning con Elo dinámico, forma reciente, calibración de probabilidades, SHAP y 200.000 simulaciones Monte Carlo para estimar al campeón de la final Argentina vs España.",
     image: "/worldcup2026.png",
-    github: "#",
-    link: null,
+    tags: ["Machine Learning", "Python"],
   },
-  {
-    name: "Modelo de Scoring para seleccionar acciones en una cartera de inversión (en proceso)",
-    description:
-      "Modelo cuantitativo para evaluar y clasificar acciones según métricas fundamentales, técnicas y de riesgo. Publicación inicial en LinkedIn.",
-    image: "/scoringmodel.png",
-    github: null,
-    link: "https://www.linkedin.com/feed/update/urn:li:activity:7355216612196519936",
-  },
-
-  {
-    name: "🚗 Uber Driver Analytics — EDA & Rentabilidad",
-    description:
-      "Análisis exploratorio y modelo de métricas de rentabilidad para conductores de Uber utilizando datos reales de la plataforma. Incluye visualización geoespacial de viajes, ingresos por zona y horario, análisis de eficiencia, cantidad de viajes, revenue por hora y métricas clave para optimizar decisiones operativas del conductor.",
-    image: "/uberdriver.png",
-    github: "#",
-    link: null,
-  },
-
-  {
-    name: "📈 Análisis Estadístico de ETFs & Pruebas de Hipótesis",
-    description:
-      "Estudio cuantitativo sobre ETFs utilizando análisis estadístico, optimización de portafolios y pruebas de hipótesis. Incluye comparación Equity vs Bonds, Markowitz vs 60/40, análisis de correlaciones, PCA, HRP, VaR y CVaR, con conclusiones prácticas para distintos perfiles de inversor.",
-    image: "/stastiscaletfs.png",
-    github: "https://github.com/fedemartinez5425/Codigos-Youtube/blob/main/Data%20Analysis/Statistical%20Analysis%20for%20ETF's/2-script-etfs-simplified.ipynb",
-    link: null
-  },
-
-  {
-    name: "📊 Portfolio Financiero en Databricks",
-    description:
-      "Dashboard analítico desarrollado en Databricks para el análisis y seguimiento de un portafolio financiero. Incluye retornos, riesgo, métricas agregadas y visualizaciones orientadas a apoyar decisiones de inversión.",
-    image: "/portfoliodatabricks.png",
-    github: "https://github.com/fedemartinez5425/Databricks",
-    link: "https://dbc-e78805c9-ae33.cloud.databricks.com/dashboardsv3/01f0ed9878de1586bd10251efedfdc9d/published?o=1775234182689834"
-  },
-
   {
     name: "📊 Advanced Portfolio Optimizer",
     description:
-      "Esta aplicación te permite simular y optimizar portafolios de inversión utilizando la teoría moderna de portafolios. Incluye costos de transacción, slippage y métricas avanzadas de riesgo. Conceptos: Sharpe Ratio, VaR, CVaR, Drawdown.",
+      "App para simular y optimizar portafolios con teoría moderna de carteras, costos de transacción y slippage. Sharpe, VaR, CVaR y drawdown.",
     image: "/portfolioopt.png",
-    github: null,
+    tags: ["Finanzas", "Streamlit"],
     link: "https://portfoliopt.streamlit.app/",
   },
-
   {
-    name: "OptionsPro Dashboard",
+    name: "🚗 Uber Driver Analytics",
     description:
-      "Dashboard en Streamlit para traders de opciones. Visualiza cadenas, volatilidad y estrategias basadas en datos de Yahoo Finance.",
+      "Análisis de rentabilidad para conductores con datos reales: ingresos por zona y horario, revenue por hora, eficiencia y mapas de viajes para optimizar decisiones.",
+    image: "/uberdriver.png",
+    tags: ["Análisis de datos", "Negocio"],
+  },
+  {
+    name: "📈 OptionsPro Dashboard",
+    description:
+      "Dashboard para traders de opciones: cadenas, volatilidad y estrategias con datos de Yahoo Finance.",
     image: "/dashboard.PNG",
-    github: "#",
+    tags: ["Finanzas", "Streamlit"],
     link: "https://optimaoptionspro.streamlit.app/",
   },
-
+  {
+    name: "Dashboard de Performance Regional (Power BI)",
+    description:
+      "Dashboard de ventas con métricas de cumplimiento, detección de outliers de eficiencia y reporte operativo de pedidos vs. envíos con DAX avanzado. Desafío para Lovelytics.",
+    image: "/lovelytics-dashboard.png",
+    tags: ["BI", "Power BI"],
+  },
+  {
+    name: "Machine Learning — Rotación de empleados",
+    description:
+      "Modelo predictivo en Python, visualizado en Tableau, que identifica los factores asociados a la rotación de personal.",
+    image: "/ml-hr.png",
+    tags: ["People Analytics", "Tableau"],
+    link: "https://public.tableau.com/app/profile/federico.martinez3300/viz/DashboardML-HR/Dashboard1",
+  },
+  {
+    name: "Análisis Estadístico de ETFs",
+    description:
+      "Equity vs Bonds, Markowitz vs 60/40, correlaciones, PCA, HRP, VaR y CVaR, con conclusiones prácticas para distintos perfiles de inversor.",
+    image: "/stastiscaletfs.png",
+    tags: ["Finanzas", "Estadística"],
+    github:
+      "https://github.com/fedemartinez5425/Codigos-Youtube/blob/main/Data%20Analysis/Statistical%20Analysis%20for%20ETF's/2-script-etfs-simplified.ipynb",
+  },
+  {
+    name: "Portfolio Financiero en Databricks",
+    description:
+      "Dashboard en Databricks para seguir un portafolio: retornos, riesgo y métricas agregadas para apoyar decisiones de inversión.",
+    image: "/portfoliodatabricks.png",
+    tags: ["Databricks", "Finanzas"],
+    github: "https://github.com/fedemartinez5425/Databricks",
+    link: "https://dbc-e78805c9-ae33.cloud.databricks.com/dashboardsv3/01f0ed9878de1586bd10251efedfdc9d/published?o=1775234182689834",
+  },
+  {
+    name: "Score Crediticio con Machine Learning",
+    description:
+      "App que predice el score crediticio de clientes con Decision Trees y Random Forest.",
+    image: "/creditscore.PNG",
+    tags: ["Machine Learning", "Streamlit"],
+    link: "https://creditscoremodel.streamlit.app/",
+  },
+  {
+    name: "Scoring de acciones (en proceso)",
+    description:
+      "Modelo cuantitativo que evalúa y clasifica acciones según métricas fundamentales, técnicas y de riesgo.",
+    image: "/scoringmodel.png",
+    tags: ["Finanzas", "Python"],
+    link: "https://www.linkedin.com/feed/update/urn:li:activity:7355216612196519936",
+  },
+  {
+    name: "Dashboard de ventas — Classic Models",
+    description:
+      "Dashboard ejecutivo en Tableau con ventas globales, márgenes y desempeño por línea de producto y región.",
+    image: "/classicmodels.png",
+    tags: ["BI", "Tableau"],
+    link: "https://public.tableau.com/app/profile/federico.martinez3300/viz/ClassicModelsSalesDashboard/ResumenEjecutivo",
+  },
+  {
+    name: "Optima Consulting & Management (2023–2025)",
+    description:
+      "Cofundador y analista. Dashboards financieros, automatizaciones RPA y modelos de datos para instituciones y operadores.",
+    image: "/optima.png",
+    tags: ["Consultoría", "RPA"],
+    link: "https://www.optimafinancials.com/",
+  },
   {
     name: "Canal de YouTube — Data Finance",
     description:
       "Canal educativo sobre Python y finanzas cuantitativas, con foco en automatización y visualización de datos.",
     image: "/github.png",
+    tags: ["Contenido", "Python"],
     github: "https://github.com/fedemartinez5425",
     link: "https://www.youtube.com/@DataFinanceByFede",
   },
-
-  {
-    name: "Optima Consulting & Management LLC (2023–2025)",
-    description:
-      "Cofundador y analista. Creación de dashboards financieros, automatizaciones RPA y modelos de datos para instituciones y operadores.",
-    image: "/optima.png",
-    github: "https://github.com/fedeheisemberg/Optima-Landing-Page",
-    link: "https://www.optimafinancials.com/",
-  },
-
-  {
-    name: "Modelo de Machine Learning — Score Crediticio",
-    description:
-      "App en Streamlit que predice el score crediticio mediante Decision Trees y Random Forest. Dataset de 1.000 clientes.",
-    image: "/creditscore.PNG",
-    github: "#",
-    link: "https://creditscoremodel.streamlit.app/",
-  },
-
-  {
-    name: "Machine Learning — Predicción de abandono de empleados",
-    description:
-      "Modelo predictivo desarrollado en Python y visualizado en Tableau Public. Analiza factores asociados a la rotación del personal.",
-    image: "/ml-hr.png",
-    github: "#",
-    link: "https://public.tableau.com/app/profile/federico.martinez3300/viz/DashboardML-HR/Dashboard1",
-  },
-
-  {
-    name: "Dashboard de Performance Regional & Control Operativo en Power BI",
-    description:
-      "Análisis integral de performance comercial desarrollado para un desafío de Lovelytics. Incluye un dashboard estratégico de ventas con métricas de cumplimiento recalibradas, análisis de dispersión para detectar outliers de eficiencia y un reporte operativo con lógica DAX avanzada (USERELATIONSHIP) para el seguimiento de pedidos vs. envíos.",
-    image: "/lovelytics-dashboard.png",
-    github: null, 
-    link: "#",
-  },
-
-  {
-    name: "Dashboard — Base de datos Classic Models",
-    description:
-      "Dashboard ejecutivo en Tableau con métricas de ventas globales, márgenes y desempeño por línea de producto y región.",
-    image: "/classicmodels.png",
-    github: "#",
-    link: "https://public.tableau.com/app/profile/federico.martinez3300/viz/ClassicModelsSalesDashboard/ResumenEjecutivo",
-  },
 ];
 
-const ProjectsSection = () => {
+const INITIAL = 6;
+
+const ProjectCard = ({ project }: { project: Project }) => {
+  const main = project.link || project.github;
+  const img = (
+    <div className="relative aspect-video overflow-hidden rounded-t-2xl bg-neutral-100 dark:bg-stone-800">
+      <Image
+        src={project.image}
+        alt={project.name}
+        fill
+        sizes="(min-width: 768px) 33vw, 100vw"
+        className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+  );
+
   return (
-    <section id="projects">
-      <h1 className="my-10 text-center font-bold text-4xl">
-        Proyectos destacados
+    <article className="group flex flex-col rounded-2xl border border-neutral-200 dark:border-stone-700 bg-white dark:bg-stone-800/60 shadow-sm hover:shadow-lg transition-shadow">
+      {main ? (
+        <a href={main} target="_blank" rel="noopener noreferrer" aria-label={project.name}>
+          {img}
+        </a>
+      ) : (
+        img
+      )}
+      <div className="flex flex-col flex-1 p-5">
+        <div className="flex flex-wrap gap-2 mb-3">
+          {project.tags.map((t) => (
+            <span
+              key={t}
+              className="text-xs font-semibold px-2 py-1 rounded-full bg-teal-50 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+        <h3 className="text-lg font-bold mb-2">{project.name}</h3>
+        <p className="text-sm leading-6 text-neutral-600 dark:text-neutral-400 mb-4">
+          {project.description}
+        </p>
+        <div className="mt-auto flex items-center gap-4 text-sm font-semibold">
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-teal-700 dark:text-teal-300 hover:underline"
+            >
+              Ver proyecto <BsArrowUpRight />
+            </a>
+          )}
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-neutral-700 dark:text-neutral-300 hover:underline"
+            >
+              <BsGithub /> Código
+            </a>
+          )}
+          {!main && (
+            <span className="text-neutral-500 dark:text-neutral-400 italic font-normal">
+              🔒 Proyecto privado
+            </span>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+};
+
+const ProjectsSection = () => {
+  const [showAll, setShowAll] = useState(false);
+  const visible = showAll ? projects : projects.slice(0, INITIAL);
+
+  return (
+    <section id="projects" className="pt-20 md:pt-28">
+      <h1 className="text-center font-bold text-4xl">
+        Proyectos
         <hr className="w-6 h-1 mx-auto my-4 bg-teal-500 border-0 rounded" />
       </h1>
+      <p className="text-center text-lg text-neutral-700 dark:text-neutral-300 max-w-2xl mx-auto mb-12">
+        Algunos trabajos de análisis, dashboards y finanzas cuantitativas.
+      </p>
 
-      <div className="flex flex-col space-y-28">
-        {projects.map((project, idx) => (
-          <div key={idx}>
-            <SlideUp offset="-300px 0px -300px 0px">
-              <div className="flex flex-col animate-slideUpCubiBezier animation-delay-2 md:flex-row md:space-x-12">
-                
-                <div className="md:w-1/2">
-                  {project.link ? (
-                    <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                      <Image
-                        src={project.image}
-                        alt={project.name}
-                        width={1000}
-                        height={1000}
-                        className="rounded-xl shadow-xl hover:opacity-80 transition-all duration-300"
-                      />
-                    </Link>
-                  ) : (
-                    <Image
-                      src={project.image}
-                      alt={project.name}
-                      width={1000}
-                      height={1000}
-                      className="rounded-xl shadow-xl opacity-90"
-                    />
-                  )}
-                </div>
-
-                <div className="mt-8 md:w-1/2">
-                  <h1 className="text-3xl font-bold mb-4 text-teal-600">
-                    {project.name}
-                  </h1>
-                  <p className="text-lg leading-7 mb-6 text-neutral-700 dark:text-neutral-300">
-                    {project.description}
-                  </p>
-                  {project.github || project.link ? (
-                    <div className="flex flex-row space-x-5">
-                      {project.github && project.github !== "#" && (
-                        <Link href={project.github} target="_blank" rel="noopener noreferrer">
-                          <BsGithub
-                            size={30}
-                            className="hover:-translate-y-1 transition-transform cursor-pointer"
-                            title="Ver código"
-                          />
-                        </Link>
-                      )}
-                      {project.link && (
-                        <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                          <BsArrowUpRightSquare
-                            size={30}
-                            className="hover:-translate-y-1 transition-transform cursor-pointer"
-                            title="Ver proyecto"
-                          />
-                        </Link>
-                      )}
-                    </div>
-                  ) : (
-                    <span className="text-sm italic text-neutral-500 dark:text-neutral-400">
-                      🔒 Proyecto confidencial
-                    </span>
-                  )}
-                </div>
-              </div>
-            </SlideUp>
-          </div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {visible.map((p) => (
+          <ProjectCard key={p.name} project={p} />
         ))}
       </div>
+
+      {projects.length > INITIAL && (
+        <div className="text-center mt-10">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="font-semibold px-6 py-3 rounded-lg border-2 border-teal-600 text-teal-700 dark:text-teal-300 hover:bg-teal-50 dark:hover:bg-stone-800 transition"
+          >
+            {showAll ? "Ver menos" : `Ver todos los proyectos (${projects.length})`}
+          </button>
+        </div>
+      )}
     </section>
   );
 };
 
 export default ProjectsSection;
-
-
-
-

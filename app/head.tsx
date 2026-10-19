@@ -1,10 +1,10 @@
 export default function Head() {
-  const title = "Federico Martinez | Data Analyst & BI Developer";
+  const title = "Federico Martinez | Dashboards, Automatización y Análisis de Datos";
   const description =
-    "Portfolio de Federico Martinez, Analista de Datos con enfoque en Business Intelligence, Automatización de Procesos y Finanzas Cuantitativas. Descubrí mis proyectos y experiencia.";
+    "Ayudo a empresas, emprendedores y profesionales a tomar mejores decisiones con dashboards, automatización de procesos y análisis financiero. Analista de Datos en Argentina.";
 
   const url = "https://fede-martinez-portfolio.vercel.app/";
-  const image = "https://fede-martinez-portfolio.vercel.app/preview.png"; // agregalo luego a /public
+  const image = "https://fede-martinez-portfolio.vercel.app/preview.png";
 
   return (
     <>
